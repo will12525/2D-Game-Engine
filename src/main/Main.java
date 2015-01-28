@@ -34,7 +34,7 @@ public class Main {
 		  /////////////////
 		 //Testing Start//
 		/////////////////
-		final Font f = new Font(new java.awt.Font("Times New Roman", 16, 24), "Hello, WOrld!", new Color(255, 0, 0, 0), 100, 118);
+		final Font f = new Font(new java.awt.Font("Times New Roman", 16, 24), "Hello, World!", new Color(255, 0, 0, 0), 100, 118);
 		
 		f.setThread(new Thread()
 		{
