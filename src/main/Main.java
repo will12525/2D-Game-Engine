@@ -68,9 +68,9 @@ public class Main {
 		
 		this.addFont(f);
 		f.runThread();
-		  ///////////////
-		 //Testing End//
 		///////////////
+	   //Testing End//
+      ///////////////
 		
 		
 		while(running)
