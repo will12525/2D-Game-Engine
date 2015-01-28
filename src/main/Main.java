@@ -12,6 +12,9 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+import main.fonts.FadingFont;
+import main.fonts.Font;
+
 public class Main {
 
 	public final int WIDTH = 1000;
@@ -26,7 +29,7 @@ public class Main {
 	//for referencing local objects
 	public static Main instance = null;
 	
-	public List<Font> fonts = new ArrayList<Font>();
+	private List<Font> fonts = new ArrayList<Font>();
 
 	@SuppressWarnings("unused")
 	public Main()
@@ -36,41 +39,8 @@ public class Main {
 		  /////////////////
 		 //Testing Start//
 		/////////////////
-		final Font f = new Font(new java.awt.Font("Times New Roman", 16, 24), "Hello, World!", new Color(255, 0, 0, 0), 100, 118);
-		
-		f.setThread(new Thread()
-		{
-			@Override
-			public void run()
-			{
-				int changeO = 1;
-				int opac = 0;
-				
-				while(true)
-				{
-					//System.out.println(f.getColor().getAlpha());
-					f.setColor(new Color(255, 0, 0, opac += changeO));
-					
-					if(opac == 255)
-					{
-						changeO = -1;
-					}
-					else if (opac == 0)
-					{
-						changeO = 1;
-					}
-					
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-		
+		Font f = new FadingFont(new java.awt.Font("Times New Roman", 16, 24), "Hello, World!", new Color(255, 0, 100), 100, 118, 0, 20, 10, 0, 255);
 		this.addFont(f);
-		f.runThread();
 		///////////////
 	   //Testing End//
       ///////////////
