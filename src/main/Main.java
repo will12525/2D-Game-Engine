@@ -7,21 +7,31 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 
 public class Main {
 
-	final int WIDTH = 1000;
-	final int HEIGHT = 1000;
-	boolean running=true;
-	public Graphics2D g = null;
-	public BufferStrategy strat = null;
+	public final int WIDTH = 1000;
+	public final int HEIGHT = 1000;
+	private boolean running=true;
+	private Graphics2D g = null;
+	private BufferStrategy strat = null;
+	
+	//for referencing local objects
+	public static Main instance = null;
+	
+	public List<Font> fonts = new ArrayList<Font>();
 
+	@SuppressWarnings("unused")
 	public Main()
 	{
 		makeCanvas();
 
+		Font f = new Font(new java.awt.Font("Times New Roman", 16, 24), "Hello, WOrld!", Color.RED, 100, 118);
+		this.addFont(f);
 		
 		while(running)
 		{
@@ -44,11 +54,18 @@ public class Main {
 	{
 		g = (Graphics2D) strat.getDrawGraphics();
 
+		//background
 		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
-
-		g.setColor(Color.WHITE);
-		g.drawString("Hello world!",470,200);
+		g.fillRect(0, 0, WIDTH, HEIGHT);		
+		
+		for(Font font : this.getFonts())
+		{
+			//note: draws font from the bottom left point on string
+			
+			g.setColor(font.getColor());
+			g.setFont(font.getFont());
+			g.drawString(font.getText(), font.getX(), font.getY());
+		}
 		
 		strat.show();
 	}
@@ -73,8 +90,26 @@ public class Main {
 		c.createBufferStrategy(2);
 		strat = c.getBufferStrategy();
 	}
+	
+	//thread safe getter for font list
+	public synchronized List<Font> getFonts()
+	{
+		return this.fonts;
+	}
+	
+	//add a font to the list, to be drawn every graphic tick
+	public synchronized void addFont(Font f)
+	{
+		this.getFonts().add(f);
+	}
+	
+	//remove font from list
+	public synchronized void removeFont(Font f)
+	{
+		this.getFonts().remove(f);
+	}
 
 	public static void main(String[] args) {
-		new Main();
+		instance = new Main();
 	}
 }
