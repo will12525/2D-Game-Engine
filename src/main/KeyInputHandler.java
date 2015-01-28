@@ -11,9 +11,6 @@ public class KeyInputHandler implements KeyListener {
 
 	public class Key{
 		public boolean down;
-
-
-
 		public void toggle(boolean isPressed)
 		{
 
@@ -29,7 +26,6 @@ public class KeyInputHandler implements KeyListener {
 	public Key down = new Key();
 	
 	public void keyPressed(KeyEvent e) {
-		
 		toggleKey(e.getKeyCode(),true);
 	}
 

@@ -21,6 +21,7 @@ public class Main {
 	private BufferStrategy strat = null;
 	
 	public KeyInputHandler input;
+	public MouseInput mouse;
 	
 	//for referencing local objects
 	public static Main instance = null;
@@ -88,6 +89,7 @@ public class Main {
 			if(System.currentTimeMillis() % 20 == 0)
 			{
 				//logic
+			
 			}
 		}
 	}
@@ -122,6 +124,10 @@ public class Main {
 		{
 			g.drawString("Hello World!", 10, 10);
 		}
+		if(mouse.button1.down)
+		{
+			g.drawString("Mouse works", mouse.button1.getX(),mouse.button1.getY());
+		}
 		//
 		g.dispose();
 		strat.show();
@@ -131,6 +137,7 @@ public class Main {
 	public void makeCanvas()
 	{
 		input = new KeyInputHandler();
+		mouse = new MouseInput();
 		JFrame frame = new JFrame("ENGINE");
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -146,6 +153,7 @@ public class Main {
 		frame.setVisible(true);
 		frame.requestFocus();
 		frame.addKeyListener(input);
+		c.addMouseListener(mouse);
 		
 		c.createBufferStrategy(2);
 		strat = c.getBufferStrategy();
