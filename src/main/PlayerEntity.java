@@ -1,19 +1,18 @@
 package main;
 
-import java.awt.Image;
+public class PlayerEntity extends Entity {
 
-public class PlayerEntity extends Entity{
-
-	private int x,y;
-	private String name;
-	KeyInputHandler input;
-	Image image;
-	public PlayerEntity(String name, int x, int y,KeyInputHandler input) {
-		super(name, x, y);
+	private KeyInputHandler input;
+	
+	public PlayerEntity(String name, int x, int y, KeyInputHandler input, String path) {
+		super(name, x, y, path);
+		
 		this.x=x;
 		this.y=y;
-		this.name=name;
 		this.input=input;
+		
+		this.dx = .05d;
+		this.dy = .05d;
 		
 	}
 
@@ -21,35 +20,19 @@ public class PlayerEntity extends Entity{
 	{
 		if(input.up.down)
 		{
-			y--;
+			y -= dy;
 		}
 		if(input.down.down)
 		{
-			y++;
+			y += dy;
 		}
 		if(input.left.down)
 		{
-			x--;
+			x -= dx;
 		}
 		if(input.right.down)
 		{
-			x++;
+			x += dx;
 		}
 	}
-	
-	public Image getImage() {
-		
-		return ImageLoader.getImage("/sprites/alien3.png");
-	}
-
-	
-	public int getX() {
-		
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
 }

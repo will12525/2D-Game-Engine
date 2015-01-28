@@ -125,7 +125,7 @@ public class Main {
 	}
 	public void createEntitys()
 	{
-		player = new PlayerEntity("Player", 50, 50, input);
+		player = new PlayerEntity("Player", 50, 50, input, "/sprites/alien3.png");
 		entities.add(player);
 	}
 
