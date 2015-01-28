@@ -25,16 +25,19 @@ public class Main {
 	
 	public KeyInputHandler input;
 	public MouseInput mouse;
+	public PlayerEntity player;
 	
 	//for referencing local objects
 	public static Main instance = null;
 	
 	private List<Font> fonts = new ArrayList<Font>();
+	ArrayList<Entity> entities = new ArrayList<Entity>();
 
 	@SuppressWarnings("unused")
 	public Main()
 	{
 		makeCanvas();
+		createEntitys();
 
 		  /////////////////
 		 //Testing Start//
@@ -58,7 +61,8 @@ public class Main {
 			
 			if(System.currentTimeMillis() % 20 == 0)
 			{
-				//logic
+			
+				logic();
 			
 			}
 		}
@@ -98,10 +102,31 @@ public class Main {
 		{
 			g.drawString("Mouse works", mouse.button1.getX(),mouse.button1.getY());
 		}
-		//
+		
+		
+		for(int k=0;k<entities.size();k++)
+		{
+			entities.get(k).draw(g);
+		}
+		
 		g.dispose();
 		strat.show();
 		
+	}
+	public void logic()
+	{
+		for(int k=0;k<entities.size();k++)
+		{
+			Entity entity = entities.get(k);
+			entity.logic();
+			System.out.println(entity.getX()+", "+entity.getY());
+			
+		}
+	}
+	public void createEntitys()
+	{
+		player = new PlayerEntity("Player", 50, 50, input);
+		entities.add(player);
 	}
 
 	public void makeCanvas()

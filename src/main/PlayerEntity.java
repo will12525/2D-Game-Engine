@@ -29,17 +29,17 @@ public class PlayerEntity extends Entity{
 		}
 		if(input.left.down)
 		{
-			x++;
+			x--;
 		}
 		if(input.right.down)
 		{
-			x--;
+			x++;
 		}
 	}
 	
 	public Image getImage() {
 		
-		return ImageLoader.getImage("/sprites/alien3.GIF");
+		return ImageLoader.getImage("/sprites/alien3.png");
 	}
 
 	
