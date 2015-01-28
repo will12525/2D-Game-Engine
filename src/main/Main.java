@@ -20,6 +20,8 @@ public class Main {
 	private Graphics2D g = null;
 	private BufferStrategy strat = null;
 	
+	public KeyInputHandler input;
+	
 	//for referencing local objects
 	public static Main instance = null;
 	
@@ -45,7 +47,7 @@ public class Main {
 				
 				while(true)
 				{
-					System.out.println(f.getColor().getAlpha());
+					//System.out.println(f.getColor().getAlpha());
 					f.setColor(new Color(255, 0, 0, opac += changeO));
 					
 					if(opac == 255)
@@ -109,11 +111,26 @@ public class Main {
 			g.drawString(font.getText(), font.getX(), font.getY());
 		}
 		
+		//for key testing purposes
+		g.setColor(Color.BLUE);
+		if(input.up.down)
+		{
+			g.drawString("Its working!", 500, 500);
+		}
+		
+		if(input.down.down)
+		{
+			g.drawString("Hello World!", 10, 10);
+		}
+		//
+		g.dispose();
 		strat.show();
+		
 	}
 
 	public void makeCanvas()
 	{
+		input = new KeyInputHandler();
 		JFrame frame = new JFrame("ENGINE");
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -128,6 +145,7 @@ public class Main {
 		frame.pack();
 		frame.setVisible(true);
 		frame.requestFocus();
+		frame.addKeyListener(input);
 		
 		c.createBufferStrategy(2);
 		strat = c.getBufferStrategy();
