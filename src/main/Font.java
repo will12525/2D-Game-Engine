@@ -19,6 +19,8 @@ public class Font {
 	//Color of font
 	private Color color;
 
+	//opacity
+	
 	public Font(java.awt.Font font, String text, Thread thread, Color color, int x, int y)
 	{
 		this.font = font;

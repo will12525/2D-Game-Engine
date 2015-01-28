@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -30,8 +31,48 @@ public class Main {
 	{
 		makeCanvas();
 
-		Font f = new Font(new java.awt.Font("Times New Roman", 16, 24), "Hello, WOrld!", Color.RED, 100, 118);
+		  /////////////////
+		 //Testing Start//
+		/////////////////
+		final Font f = new Font(new java.awt.Font("Times New Roman", 16, 24), "Hello, WOrld!", new Color(255, 0, 0, 0), 100, 118);
+		
+		f.setThread(new Thread()
+		{
+			@Override
+			public void run()
+			{
+				int changeO = 1;
+				int opac = 0;
+				
+				while(true)
+				{
+					System.out.println(f.getColor().getAlpha());
+					f.setColor(new Color(255, 0, 0, opac += changeO));
+					
+					if(opac == 255)
+					{
+						changeO = -1;
+					}
+					else if (opac == 0)
+					{
+						changeO = 1;
+					}
+					
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		
 		this.addFont(f);
+		f.runThread();
+		  ///////////////
+		 //Testing End//
+		///////////////
+		
 		
 		while(running)
 		{
@@ -64,6 +105,8 @@ public class Main {
 			
 			g.setColor(font.getColor());
 			g.setFont(font.getFont());
+			//g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_IN, font.getOpacity()));
+			
 			g.drawString(font.getText(), font.getX(), font.getY());
 		}
 		
