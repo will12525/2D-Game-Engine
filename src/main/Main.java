@@ -9,7 +9,6 @@ import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 public class Main {
 
@@ -23,29 +22,35 @@ public class Main {
 	{
 		makeCanvas();
 
+		
 		while(running)
 		{
-			g = (Graphics2D) strat.getDrawGraphics();
-
-			g.setColor(Color.BLACK);
-			g.fillRect(0, 0, WIDTH, HEIGHT);
-
-			g.setColor(Color.WHITE);
-			g.drawString("Hello world!",470,200);
-
-
-
-
-
-
-
-
-
-
-
-
-			strat.show();
+			long time = System.currentTimeMillis();
+			
+			if(System.currentTimeMillis() % 16 == 0)
+			{
+				render();
+		
+			}
+			
+			if(System.currentTimeMillis() % 20 == 0)
+			{
+				//logic
+			}
 		}
+	}
+	
+	public void render()
+	{
+		g = (Graphics2D) strat.getDrawGraphics();
+
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+
+		g.setColor(Color.WHITE);
+		g.drawString("Hello world!",470,200);
+		
+		strat.show();
 	}
 
 	public void makeCanvas()
