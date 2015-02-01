@@ -1,4 +1,6 @@
-package main;
+package main.entity;
+
+import main.KeyInputHandler;
 
 public class PlayerEntity extends Entity {
 
@@ -11,8 +13,8 @@ public class PlayerEntity extends Entity {
 		this.y=y;
 		this.input=input;
 		
-		this.dx = .05d;
-		this.dy = .05d;
+		this.dx = 10d;
+		this.dy = 10d;
 		
 	}
 

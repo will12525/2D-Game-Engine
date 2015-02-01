@@ -12,6 +12,8 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+import main.entity.Entity;
+import main.entity.PlayerEntity;
 import main.fonts.FadingFont;
 import main.fonts.Font;
 
@@ -22,14 +24,14 @@ public class Main {
 	private boolean running=true;
 	private Graphics2D g = null;
 	private BufferStrategy strat = null;
-	
+
 	public KeyInputHandler input;
 	public MouseInput mouse;
 	public PlayerEntity player;
-	
+
 	//for referencing local objects
 	public static Main instance = null;
-	
+
 	private List<Font> fonts = new ArrayList<Font>();
 	ArrayList<Entity> entities = new ArrayList<Entity>();
 
@@ -39,35 +41,46 @@ public class Main {
 		makeCanvas();
 		createEntitys();
 
-		  /////////////////
-		 //Testing Start//
+		/////////////////
+		//Testing Start//
 		/////////////////
 		Font f = new FadingFont(new java.awt.Font("Times New Roman", 16, 24), "Hello, World!", new Color(255, 0, 100), 100, 118, 0, 20, 10, 0, 255);
 		this.addFont(f);
 		///////////////
-	   //Testing End//
-      ///////////////
-		
-		
+		//Testing End//
+		///////////////
+
+
 		while(running)
 		{
-			long time = System.currentTimeMillis();
+			long start = System.currentTimeMillis();
+
+			logic();
+
+			render();
 			
-			if(System.currentTimeMillis() % 16 == 0)
+			long end = System.currentTimeMillis();
+			
+			
+			long sleep = 20 - (end - start);
+			System.out.println("sleep = 20 - (" + end + " - " + start + ")");
+			System.out.println("sleep = 20 - (" + (end - start) + ")");
+
+			if(sleep < 0)
 			{
-				render();
-		
+				System.out.println("WARNING: Can't keep up");
+				sleep *= -1;
 			}
 			
-			if(System.currentTimeMillis() % 20 == 0)
-			{
-			
-				logic();
-			
+			try {
+				Thread.sleep(sleep);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
+
 		}
 	}
-	
+
 	public void render()
 	{
 		g = (Graphics2D) strat.getDrawGraphics();
@@ -75,25 +88,25 @@ public class Main {
 		//background
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH, HEIGHT);		
-		
+
 		for(Font font : this.getFonts())
 		{
 			//note: draws font from the bottom left point on string
-			
+
 			g.setColor(font.getColor());
 			g.setFont(font.getFont());
 			//g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_IN, font.getOpacity()));
-			
+
 			g.drawString(font.getText(), font.getX(), font.getY());
 		}
-		
+
 		//for key testing purposes
 		g.setColor(Color.BLUE);
 		if(input.up.down)
 		{
 			g.drawString("Its working!", 500, 500);
 		}
-		
+
 		if(input.down.down)
 		{
 			g.drawString("Hello World!", 10, 10);
@@ -102,16 +115,16 @@ public class Main {
 		{
 			g.drawString("Mouse works", mouse.button1.getX(),mouse.button1.getY());
 		}
-		
-		
+
+
 		for(int k=0;k<entities.size();k++)
 		{
 			entities.get(k).draw(g);
 		}
-		
+
 		g.dispose();
 		strat.show();
-		
+
 	}
 	public void logic()
 	{
@@ -119,8 +132,8 @@ public class Main {
 		{
 			Entity entity = entities.get(k);
 			entity.logic();
-			System.out.println(entity.getX()+", "+entity.getY());
-			
+			//System.out.println(entity.getX()+", "+entity.getY());
+
 		}
 	}
 	public void createEntitys()
@@ -137,35 +150,35 @@ public class Main {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
-		
+
 		Canvas c = new Canvas();
 		c.setPreferredSize(new Dimension(WIDTH,HEIGHT));
 		c.setBounds(new Rectangle(WIDTH, HEIGHT));
 		c.setIgnoreRepaint(true);
-		
+
 		frame.add(c, BorderLayout.CENTER);
 		frame.pack();
 		frame.setVisible(true);
 		frame.requestFocus();
 		frame.addKeyListener(input);
 		c.addMouseListener(mouse);
-		
+
 		c.createBufferStrategy(2);
 		strat = c.getBufferStrategy();
 	}
-	
+
 	//thread safe getter for font list
 	public synchronized List<Font> getFonts()
 	{
 		return this.fonts;
 	}
-	
+
 	//add a font to the list, to be drawn every graphic tick
 	public synchronized void addFont(Font f)
 	{
 		this.getFonts().add(f);
 	}
-	
+
 	//remove font from list
 	public synchronized void removeFont(Font f)
 	{

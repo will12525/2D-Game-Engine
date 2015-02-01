@@ -1,7 +1,9 @@
-package main;
+package main.entity;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+
+import main.ImageLoader;
 
 
 public abstract class Entity {
