@@ -35,7 +35,6 @@ public class Main {
 	private List<Font> fonts = new ArrayList<Font>();
 	ArrayList<Entity> entities = new ArrayList<Entity>();
 
-	@SuppressWarnings("unused")
 	public Main()
 	{
 		makeCanvas();
@@ -61,10 +60,7 @@ public class Main {
 			
 			long end = System.currentTimeMillis();
 			
-			
 			long sleep = 20 - (end - start);
-			System.out.println("sleep = 20 - (" + end + " - " + start + ")");
-			System.out.println("sleep = 20 - (" + (end - start) + ")");
 
 			if(sleep < 0)
 			{
